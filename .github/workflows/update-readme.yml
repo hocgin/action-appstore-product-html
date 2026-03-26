@@ -1,0 +1,66 @@
+name: Update README HTML
+
+on:
+  workflow_dispatch:
+    inputs:
+      developer_id:
+        description: App Store developer id.
+        required: false
+        default: '1745991813'
+      country:
+        description: App Store storefront code.
+        required: false
+        default: 'us'
+      homepage_url:
+        description: Personal homepage url for the top <sup> block.
+        required: false
+        default: 'https://wangchujiang.com/#/app'
+      sponsor_url:
+        description: Sponsor url for the top <sup> block.
+        required: false
+        default: 'https://wangchujiang.com/#/sponsor'
+      max_items:
+        description: Maximum number of icons to write into README.
+        required: false
+        default: '30'
+  schedule:
+    - cron: '0 0 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate HTML
+        id: catalog
+        uses: ./
+        with:
+          developer-id: ${{ github.event_name == 'workflow_dispatch' && inputs.developer_id || '1745991813' }}
+          country: ${{ github.event_name == 'workflow_dispatch' && inputs.country || 'us' }}
+          homepage-url: ${{ github.event_name == 'workflow_dispatch' && inputs.homepage_url || 'https://wangchujiang.com/#/app' }}
+          sponsor-url: ${{ github.event_name == 'workflow_dispatch' && inputs.sponsor_url || 'https://wangchujiang.com/#/sponsor' }}
+          max-items: ${{ github.event_name == 'workflow_dispatch' && inputs.max_items || '30' }}
+
+      - name: Update README
+        run: node scripts/update-readme.js
+        env:
+          README_PATH: README.md
+          HTML: ${{ steps.catalog.outputs.html }}
+
+      - name: Commit changes
+        run: |
+          if git diff --quiet -- README.md; then
+            echo "README unchanged"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git commit -m "docs: update README html"
+          git push origin HEAD:main
