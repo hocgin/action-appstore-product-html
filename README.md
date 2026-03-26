@@ -2,7 +2,7 @@
 
 <!-- APPSTORE_HTML_START -->
 <div markdown="1">
-  <sup>Using <a href="https://wangchujiang.com/#/app" target="_blank">my apps</a> is also a way to <a href="https://wangchujiang.com/#/sponsor" target="_blank">support</a> me:</sup>
+  <sup>Using <a href="https://logspot.hocgin.top" target="_blank">my apps</a> is also a way to <a href="https://logspot.hocgin.top/donate/" target="_blank">support</a> me:</sup>
   <br>
   <a target="_blank" href="https://apps.apple.com/us/app/earth-time-clock-and-weather/id6757922079" title="Earth Time - Clock and Weather - Earth Time - Clock and Weather Global moments, within reach"><img alt="Earth Time - Clock and Weather" height="52" width="52" src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/be/c5/97/bec59717-f3eb-15d5-752a-5776c8c56c8d/Placeholder.mill/100x100bb-75.webp"></a>
   <a target="_blank" href="https://apps.apple.com/us/app/floating-clocks/id6757073999" title="Floating Clocks - Floating Clocks Pixel-Style Flash Sale Booster"><img alt="Floating Clocks" height="52" width="52" src="https://is1-ssl.mzstatic.com/image/thumb/PurpleSource211/v4/11/3c/16/113c1691-a318-7fcb-5311-b066df1cebd1/Placeholder.mill/100x100bb-75.webp"></a>
@@ -19,8 +19,8 @@
 | `developer-id` | Yes | - | App Store 开发者数字 ID，例如 `1137057742`。 |
 | `country` | No | `us` | App Store 地区码，例如 `us`、`cn`、`in`。 |
 | `max-items` | No | `100` | 输出的作品数量上限。 |
-| `homepage-url` | No | 空 | 个人主页地址，和赞助地址一起传入时才显示顶部 `<sup>`。 |
-| `sponsor-url` | No | 空 | 赞助地址，和个人主页一起传入时才显示顶部 `<sup>`。 |
+| `homepage-url` | No | `https://logspot.hocgin.top` | 个人主页地址，和赞助地址一起传入时才显示顶部 `<sup>`。 |
+| `sponsor-url` | No | `https://logspot.hocgin.top/donate/` | 赞助地址，和个人主页一起传入时才显示顶部 `<sup>`。 |
 | `intro-html` | No | 空 | 自定义 HTML 介绍文案，优先级高于默认顶部文案。 |
 
 ## Outputs

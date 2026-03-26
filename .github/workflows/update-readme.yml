@@ -14,11 +14,11 @@ on:
       homepage_url:
         description: Personal homepage url for the top <sup> block.
         required: false
-        default: 'https://wangchujiang.com/#/app'
+        default: 'https://logspot.hocgin.top'
       sponsor_url:
         description: Sponsor url for the top <sup> block.
         required: false
-        default: 'https://wangchujiang.com/#/sponsor'
+        default: 'https://logspot.hocgin.top/donate/'
       max_items:
         description: Maximum number of icons to write into README.
         required: false
@@ -42,8 +42,8 @@ jobs:
         with:
           developer-id: ${{ github.event_name == 'workflow_dispatch' && inputs.developer_id || '1745991813' }}
           country: ${{ github.event_name == 'workflow_dispatch' && inputs.country || 'us' }}
-          homepage-url: ${{ github.event_name == 'workflow_dispatch' && inputs.homepage_url || 'https://wangchujiang.com/#/app' }}
-          sponsor-url: ${{ github.event_name == 'workflow_dispatch' && inputs.sponsor_url || 'https://wangchujiang.com/#/sponsor' }}
+          homepage-url: ${{ github.event_name == 'workflow_dispatch' && inputs.homepage_url || 'https://logspot.hocgin.top' }}
+          sponsor-url: ${{ github.event_name == 'workflow_dispatch' && inputs.sponsor_url || 'https://logspot.hocgin.top/donate/' }}
           max-items: ${{ github.event_name == 'workflow_dispatch' && inputs.max_items || '30' }}
 
       - name: Update README

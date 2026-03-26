@@ -16,11 +16,11 @@ inputs:
   homepage-url:
     description: Personal homepage URL used in the top <sup> line.
     required: false
-    default: ''
+    default: 'https://logspot.hocgin.top'
   sponsor-url:
     description: Sponsor/support URL used in the top <sup> line.
     required: false
-    default: ''
+    default: 'https://logspot.hocgin.top/donate/'
   intro-html:
     description: Optional custom intro HTML placed before the app grid.
     required: false
