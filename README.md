@@ -40,6 +40,32 @@
 3. 如果传了 `intro-html`，则优先使用 `intro-html`。
 4. `update-readme=true` 时，会把输出的 HTML 写回 `readme-path` 指定的文件。
 
+## 标记说明
+
+如果你要让 action 自动更新 README，请在目标文件里放这两个标记：
+
+```md
+<!-- APPSTORE_HTML_START -->
+<!-- APPSTORE_HTML_END -->
+```
+
+action 会把两个标记之间的内容替换成最新的 HTML，标记外的内容不会被改动。
+
+## 使用方法
+
+在 workflow 里把 `update-readme` 打开即可：
+
+```yaml
+- uses: ./
+  with:
+    developer-id: '1745991813'
+    country: 'us'
+    update-readme: 'true'
+    readme-path: README.md
+```
+
+如果你要更新别的文件，把 `readme-path` 改成目标路径即可。
+
 ## Example
 
 ```yaml
