@@ -1,5 +1,7 @@
 # App Store Product HTML Action
 
+Marketplace: https://github.com/marketplace/actions/app-store-product-html
+
 <!-- APPSTORE_HTML_START -->
 <div markdown="1">
   <sup>Using <a href="https://logspot.hocgin.top" target="_blank">my apps</a> is also a way to <a href="https://logspot.hocgin.top/donate/" target="_blank">support</a> me:</sup>
@@ -68,6 +70,8 @@ action 会把两个标记之间的内容替换成最新的 HTML，标记外的�
 
 ## Example
 
+### Marketplace 用法
+
 ```yaml
 name: Generate App Store HTML
 
@@ -80,10 +84,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: catalog
-        uses: ./
+        uses: hocgin/action-appstore-product-html@main
         with:
           developer-id: '1137057742'
           country: 'in'
           max-items: '30'
       - run: echo "${{ steps.catalog.outputs.html }}"
 ```
+
+### 仓库内调试
+
+如果是在这个仓库里本地调试，仍然可以继续使用 `uses: ./`。
