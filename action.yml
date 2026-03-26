@@ -21,6 +21,14 @@ inputs:
     description: Sponsor/support URL used in the top <sup> line.
     required: false
     default: 'https://logspot.hocgin.top/donate/'
+  update-readme:
+    description: Update README.md top HTML in place after generating it.
+    required: false
+    default: 'false'
+  readme-path:
+    description: Path to the README file to update when update-readme is enabled.
+    required: false
+    default: 'README.md'
   intro-html:
     description: Optional custom intro HTML placed before the app grid.
     required: false

@@ -27519,6 +27519,7 @@ module.exports = parseParams
 /***/ 2116:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
+const fs = __nccwpck_require__(9896);
 const core = __nccwpck_require__(7484);
 
 function escapeHtml(value) {
@@ -27562,6 +27563,10 @@ function parseMaxItems(value) {
     throw new Error(`max-items must be a positive integer, got: ${value}`);
   }
   return maxItems;
+}
+
+function parseBoolean(value) {
+  return ['1', 'true', 'yes', 'on'].includes(String(value || '').trim().toLowerCase());
 }
 
 function extractDeveloperName(html) {
@@ -27674,12 +27679,36 @@ function buildHtml({ apps, introHtml, homepageUrl, sponsorUrl }) {
   return lines.join('\n');
 }
 
+function updateReadmeFile(readmePath, html) {
+  const startMarker = '<!-- APPSTORE_HTML_START -->';
+  const endMarker = '<!-- APPSTORE_HTML_END -->';
+  const readme = fs.readFileSync(readmePath, 'utf8');
+  const startIndex = readme.indexOf(startMarker);
+  const endIndex = readme.indexOf(endMarker);
+
+  if (startIndex < 0 || endIndex < 0 || endIndex < startIndex) {
+    throw new Error(`README does not contain ${startMarker} and ${endMarker}`);
+  }
+
+  // 这里只替换标记之间的 HTML，保留 README 其余内容不变。
+  const next = `${readme.slice(0, startIndex)}${startMarker}\n${html.trim()}\n${endMarker}${readme.slice(endIndex + endMarker.length)}`;
+  const changed = next !== readme;
+
+  if (changed) {
+    fs.writeFileSync(readmePath, next);
+  }
+
+  return changed;
+}
+
 async function main() {
   try {
     const developerId = parseDeveloperId(core.getInput('developer-id', { required: true }));
     const country = normalizeCountry(core.getInput('country') || 'us');
     const maxItems = parseMaxItems(core.getInput('max-items') || '100');
     const introHtml = core.getInput('intro-html') || '';
+    const updateReadme = parseBoolean(core.getInput('update-readme'));
+    const readmePath = core.getInput('readme-path') || 'README.md';
 
     const developerUrl = `https://apps.apple.com/${country}/developer/id${developerId}`;
 
@@ -27716,6 +27745,14 @@ async function main() {
 
     core.setOutput('html', outputHtml);
     core.setOutput('count', String(apps.length));
+    core.setOutput('readme-updated', 'false');
+
+    if (updateReadme) {
+      const changed = updateReadmeFile(readmePath, outputHtml);
+      core.setOutput('readme-updated', String(changed));
+      core.info(changed ? `Updated ${readmePath}.` : `${readmePath} is already up to date.`);
+    }
+
     core.info(`Generated HTML for ${apps.length} apps.`);
   } catch (error) {
     core.setFailed(error instanceof Error ? error.message : String(error));
@@ -27734,8 +27771,10 @@ module.exports = {
   extractApps,
   extractDeveloperName,
   normalizeCountry,
+  parseBoolean,
   parseDeveloperId,
   parseMaxItems,
+  updateReadmeFile,
   stripTags
 };
 

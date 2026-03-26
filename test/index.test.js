@@ -5,9 +5,11 @@ const {
   buildHtml,
   extractApps,
   extractDeveloperName,
+  parseBoolean,
   normalizeCountry,
   parseDeveloperId,
   parseMaxItems,
+  updateReadmeFile,
   stripTags
 } = require('../src/index');
 
@@ -26,6 +28,12 @@ test('normalizeCountry lowercases and trims input', () => {
 test('parseMaxItems validates positive integers', () => {
   assert.equal(parseMaxItems('12'), 12);
   assert.throws(() => parseMaxItems('0'), /positive integer/);
+});
+
+test('parseBoolean accepts common truthy values', () => {
+  assert.equal(parseBoolean('true'), true);
+  assert.equal(parseBoolean('1'), true);
+  assert.equal(parseBoolean('no'), false);
 });
 
 test('stripTags removes markup and decodes entities', () => {
@@ -109,4 +117,23 @@ test('buildHtml can prepend custom intro html', () => {
   });
 
   assert.match(html, /<sup>Example intro<\/sup>/);
+});
+
+test('updateReadmeFile replaces the marked html block only', () => {
+  const fs = require('node:fs');
+  const os = require('node:os');
+  const path = require('node:path');
+
+  const tmp = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'appstore-readme-')), 'README.md');
+  fs.writeFileSync(
+    tmp,
+    '# Title\n\n<!-- APPSTORE_HTML_START -->\nold\n<!-- APPSTORE_HTML_END -->\n\nKeep me.\n'
+  );
+
+  const changed = updateReadmeFile(tmp, '<div>new</div>');
+  const updated = fs.readFileSync(tmp, 'utf8');
+
+  assert.equal(changed, true);
+  assert.match(updated, /<!-- APPSTORE_HTML_START -->\n<div>new<\/div>\n<!-- APPSTORE_HTML_END -->/);
+  assert.match(updated, /Keep me\./);
 });

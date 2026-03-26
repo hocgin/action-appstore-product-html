@@ -21,6 +21,8 @@
 | `max-items` | No | `100` | 输出的作品数量上限。 |
 | `homepage-url` | No | `https://logspot.hocgin.top` | 个人主页地址，和赞助地址一起传入时才显示顶部 `<sup>`。 |
 | `sponsor-url` | No | `https://logspot.hocgin.top/donate/` | 赞助地址，和个人主页一起传入时才显示顶部 `<sup>`。 |
+| `update-readme` | No | `false` | 生成 HTML 后顺手更新 README 顶部的标记区域。 |
+| `readme-path` | No | `README.md` | 需要更新的 README 文件路径。 |
 | `intro-html` | No | 空 | 自定义 HTML 介绍文案，优先级高于默认顶部文案。 |
 
 ## Outputs
@@ -29,12 +31,14 @@
 | --- | --- |
 | `html` | 生成的 HTML 片段。 |
 | `count` | 实际输出的作品数量。 |
+| `readme-updated` | 是否更新了 README。 |
 
 ## 输出规则
 
 1. 只要不传 `homepage-url` 和 `sponsor-url`，生成结果就只有图标网格。
 2. 同时传入 `homepage-url` 和 `sponsor-url` 时，会按示例插入顶部 `<sup>` 文案。
 3. 如果传了 `intro-html`，则优先使用 `intro-html`。
+4. `update-readme=true` 时，会把输出的 HTML 写回 `readme-path` 指定的文件。
 
 ## Example
 

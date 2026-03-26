@@ -45,12 +45,8 @@ jobs:
           homepage-url: ${{ github.event_name == 'workflow_dispatch' && inputs.homepage_url || 'https://logspot.hocgin.top' }}
           sponsor-url: ${{ github.event_name == 'workflow_dispatch' && inputs.sponsor_url || 'https://logspot.hocgin.top/donate/' }}
           max-items: ${{ github.event_name == 'workflow_dispatch' && inputs.max_items || '30' }}
-
-      - name: Update README
-        run: node scripts/update-readme.js
-        env:
-          README_PATH: README.md
-          HTML: ${{ steps.catalog.outputs.html }}
+          update-readme: 'true'
+          readme-path: README.md
 
       - name: Commit changes
         run: |
