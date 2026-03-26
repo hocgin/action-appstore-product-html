@@ -1,0 +1,33 @@
+name: App Store Product HTML
+description: Fetch App Store apps by developer id and country code, then output an HTML snippet.
+author: hocgin
+inputs:
+  developer-id:
+    description: App Store developer numeric id, for example 1137057742.
+    required: true
+  country:
+    description: App Store storefront code, for example us, cn, in, or hk.
+    required: false
+    default: us
+  max-items:
+    description: Maximum number of apps to include in the HTML output.
+    required: false
+    default: '100'
+  homepage-url:
+    description: Personal homepage URL used in the top <sup> line.
+    required: false
+    default: ''
+  sponsor-url:
+    description: Sponsor/support URL used in the top <sup> line.
+    required: false
+    default: ''
+  intro-html:
+    description: Optional custom intro HTML placed before the app grid.
+    required: false
+    default: ''
+outputs:
+  html:
+    description: Generated HTML snippet for the app catalog.
+runs:
+  using: node20
+  main: src/index.js
