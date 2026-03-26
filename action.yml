@@ -30,4 +30,4 @@ outputs:
     description: Generated HTML snippet for the app catalog.
 runs:
   using: node20
-  main: src/index.js
+  main: dist/index.js
