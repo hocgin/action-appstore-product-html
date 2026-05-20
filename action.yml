@@ -33,6 +33,10 @@ inputs:
     description: Optional custom intro HTML placed before the app grid.
     required: false
     default: ''
+  custom-app-url:
+    description: "Custom app URL template. Supports ${country}, ${appname}, and ${appid} placeholders. Example: https://apps.apple.com/${country}/app/${appname}/id${appid}"
+    required: false
+    default: 'https://maslink.hocgin.top/?id=${appid}'
 outputs:
   html:
     description: Generated HTML snippet for the app catalog.

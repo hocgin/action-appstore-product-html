@@ -208,6 +208,19 @@ async function main() {
     const developerName = extractDeveloperName(html);
     const apps = extractApps(html, maxItems);
 
+    const customAppUrl = core.getInput('custom-app-url') || '';
+    if (customAppUrl) {
+      for (const app of apps) {
+        const m = app.href.match(/^https:\/\/apps\.apple\.com\/(?<country>[a-z]{2})\/app\/(?<appname>[^/]+)\/id(?<appid>\d+)/);
+        if (m) {
+          app.href = customAppUrl
+            .replace(/\${country}/g, m.groups.country)
+            .replace(/\${appname}/g, m.groups.appname)
+            .replace(/\${appid}/g, m.groups.appid);
+        }
+      }
+    }
+
     if (!apps.length) {
       throw new Error(`No App Store apps found for developer ${developerId} in country ${country}`);
     }
